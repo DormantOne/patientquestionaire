@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GI and Diabetes Patient Questions</title>
+    <style>
+        /* Initially hide the questions and display them only when clicked */
+        .hidden { display: none; }
+        .disabled-section {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    </style>
+    <script>
+        function toggleVisibility(id) {
+            var element = document.getElementById(id);
+            element.style.display = element.style.display === "none" ? "block" : "none";
+        }
+
+        function checkRequirements() {
+            var consentChecked = document.getElementById('consentCheckbox').checked;
+            var diabeticMedicationChecked = document.getElementById('diabeticMedication').checked;
+            var insulinChecked = document.getElementById('insulin').checked;
+            var ageEntered = document.getElementById('age').value;
+
+            if (consentChecked && (diabeticMedicationChecked || insulinChecked) && ageEntered) {
+                document.getElementById('ibsSection').classList.remove('disabled-section');
+                document.getElementById('screeningSection').classList.remove('disabled-section');
+            } else {
+                document.getElementById('ibsSection').classList.add('disabled-section');
+                document.getElementById('screeningSection').classList.add('disabled-section');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>GI and Diabetes Patient Questions</h1>
+    
+    <!-- Consent Section -->
+    <section>
+        <h2>Consent Section</h2>
+        <p>By submitting this form, you are providing consent for your de-identified information to be used for research and analysis. Your personal information will not be shared or sold.</p>
+        <label for="consentCheckbox">
+            <input type="checkbox" id="consentCheckbox" onclick="checkRequirements()"> I have read and understood the consent statement.
+        </label>
+    </section>
+
+    <!-- Diabetes Section -->
+    <section>
+        <h2>Diabetes Information</h2>
+        <label for="diabeticMedication">
+            <input type="checkbox" id="diabeticMedication" onclick="checkRequirements()"> I am on diabetic medications.
+        </label>
+        <br>
+        <label for="insulin">
+            <input type="checkbox" id="insulin" onclick="checkRequirements()"> I am on insulin.
+        </label>
+        <br>
+        <p>HbA1c Level:</p>
+        <select id="hgba1c">
+            <option value="under7.5">Under 7.5</option>
+            <option value="7.5to8">7.5 to 8</option>
+            <option value="8to8.5">8 to 8.5</option>
+            <option value="8.5to9">8.5 to 9</option>
+            <option value="over9">Over 9</option>
+        </select>
+        <br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" onchange="checkRequirements()">
+    </section>
+
+    <!-- IBS Section -->
+    <section id="ibsSection" class="disabled-section">
+        <h2><a href="#" onclick="toggleVisibility('ibsQuestions')">IBS Symptoms</a></h2>
+        <div id="ibsQuestions" class="hidden">
+            <label for="ibsQuestion1">
+                <input type="checkbox" id="ibsQuestion1"> IBS Question 1.
+            </label>
+            <br>
+            <label for="ibsQuestion2">
+                <input type="checkbox" id="ibsQuestion2"> IBS Question 2.
+            </label>
+            <br>
+            <label for="ibsQuestion3">
+                <input type="checkbox" id="ibsQuestion3"> IBS Question 3.
+            </label>
+        </div>
+    </section>
+
+    <!-- Screening Section -->
+    <section id="screeningSection" class="disabled-section">
+        <h2><a href="#" onclick="toggleVisibility('screeningQuestions')">Screening</a></h2>
+        <div id="screeningQuestions" class="hidden">
+            <label for="screeningQuestion1">
+                <input type="checkbox" id="screeningQuestion1"> Colon screening Question 1.
+            </label>
+            <br>
+            <label for="screeningQuestion2">
+                <input type="checkbox" id="screeningQuestion2"> Colon screening Question 2.
+            </label>
+            <br>
+            <label for="screeningQuestion3">
+                <input type="checkbox" id="screeningQuestion3"> Colon screening Question 3.
+            </label>
+        </div>
+    </section>
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+</body>
+</html>
